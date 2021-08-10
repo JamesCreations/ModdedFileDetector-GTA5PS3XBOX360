@@ -72,9 +72,6 @@ Partial Class Form1
         Me.Label3.TabIndex = 4
         Me.Label3.Text = "ScriptsInformation.txt will be " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "generated for detailed file information."
         '
-        'Timer1
-        '
-        '
         'CheckBox1
         '
         Me.CheckBox1.AutoSize = True

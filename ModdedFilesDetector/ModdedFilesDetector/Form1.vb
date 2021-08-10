@@ -9,9 +9,10 @@ Public Class Form1
 
 
 
-
     Private Sub FileDelete(Filename As String, filesize As String)
-
+        If Not Directory.Exists(FolderScripts) Then
+            Directory.CreateDirectory(FolderScripts)
+        End If
 
         If Path.GetExtension(FolderScripts + Filename) = ".csc" Then
             ReturnString = ".csc"
@@ -20,9 +21,6 @@ Public Class Form1
         End If
 
         If File.Exists(FolderScripts + Filename + ReturnString) Then
-
-
-
             If CreateMD5StringFromFile(FolderScripts + Filename + ReturnString) = filesize Then
 
                 File.Delete(FolderScripts + Filename + ReturnString)
@@ -30,12 +28,7 @@ Public Class Form1
                 My.Computer.FileSystem.RenameFile(FolderScripts + Filename + ReturnString, Filename + " (Maybe Modified)" + ReturnString)
             End If
         End If
-
-
-
-
     End Sub
-
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         FileDelete("abigail1", "91E6812350FD5FA6E87C704C70D76CFC")
@@ -753,33 +746,17 @@ Public Class Form1
 
     End Sub
 
-
     Private Sub addmenunameintitle(menuname As String, menutitle As String)
-        Try
-            If File.Exists(FolderScripts + menuname + ReturnString) Then
-                My.Computer.FileSystem.RenameFile(FolderScripts + menuname + ReturnString, menuname + " ( " + menutitle + " )" + ReturnString)
-            End If
-
-        Catch ex As Exception
-
-        End Try
-    End Sub
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Timer1.Start()
-    End Sub
-
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         If Not Directory.Exists(FolderScripts) Then
             Directory.CreateDirectory(FolderScripts)
         End If
+
+        If File.Exists(FolderScripts + menuname + ReturnString) Then
+            My.Computer.FileSystem.RenameFile(FolderScripts + menuname + ReturnString, menuname + " ( " + menutitle + " )" + ReturnString)
+        End If
     End Sub
 
-    Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Timer1.Stop()
-    End Sub
-
-    Function CreateMD5StringFromFile(ByVal Filename As String) As String
-
+    Function CreateMD5StringFromFile(ByVal Filename As String) As String 'not my code just pulled from stack overflow so credits to the guy who made it.
         Dim MD5 = System.Security.Cryptography.MD5.Create
         Dim Hash As Byte()
         Dim sb As New System.Text.StringBuilder
@@ -794,4 +771,10 @@ Public Class Form1
 
         Return sb.ToString
     End Function
+
+    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Not Directory.Exists(FolderScripts) Then
+            Directory.CreateDirectory(FolderScripts)
+        End If
+    End Sub
 End Class
