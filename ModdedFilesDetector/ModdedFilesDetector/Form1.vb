@@ -7,18 +7,23 @@ Public Class Form1
     Private FolderScripts As String = "" + My.Application.Info.DirectoryPath + "\Put Exported Scripts Here\"
     Dim ReturnString As String
 
+    Function Determinefile()
+        If ComboBox1.SelectedIndex = 0 Then
+            ReturnString = ".csc"
 
+        End If
+        If ComboBox1.SelectedIndex = 1 Then
+            ReturnString = ".xsc"
+
+        End If
+    End Function
 
     Private Sub FileDelete(Filename As String, filesize As String)
         If Not Directory.Exists(FolderScripts) Then
             Directory.CreateDirectory(FolderScripts)
         End If
 
-        If Path.GetExtension(FolderScripts + Filename) = ".csc" Then
-            ReturnString = ".csc"
-        ElseIf Path.GetExtension(FolderScripts + Filename) = ".xsc" Then
-            ReturnString = ".xsc"
-        End If
+        Determinefile()
 
         If File.Exists(FolderScripts + Filename + ReturnString) Then
             If CreateMD5StringFromFile(FolderScripts + Filename + ReturnString) = filesize Then
@@ -747,6 +752,8 @@ Public Class Form1
     End Sub
 
     Private Sub addmenunameintitle(menuname As String, menutitle As String)
+        Determinefile()
+
         If Not Directory.Exists(FolderScripts) Then
             Directory.CreateDirectory(FolderScripts)
         End If
@@ -773,6 +780,9 @@ Public Class Form1
     End Function
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        ComboBox1.SelectedIndex = 0
+        Determinefile()
+
         If Not Directory.Exists(FolderScripts) Then
             Directory.CreateDirectory(FolderScripts)
         End If
